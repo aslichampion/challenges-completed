@@ -45,3 +45,15 @@ def sentence_checker(string)
         return "Hmm, this sentence doesn't seem to start with a capital, or end with appropriate punctuation."
     end
 end
+
+# Take a string, text entered in the users notes
+# scan that text for instances of #TODO 
+# return how many instances of #TODO
+# present that to the reader in a nice format like "There are currently 4 to do's in your notes"
+
+def todo_checker(string)
+
+    words = string.split(" ")
+    return "There are currently #{words.count("#TODO")} to do's in your notes"
+
+end

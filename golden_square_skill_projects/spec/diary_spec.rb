@@ -41,3 +41,10 @@ RSpec.describe "sentence_checker method" do
         expect(result).to eq "Hmm, this sentence doesn't seem to start with a capital, or end with appropriate punctuation."
     end
 end
+
+RSpec.describe "todo_checker method" do
+    it "counts how many to do's are in a string of text" do
+        result = todo_checker("#TODO hang the washing up. #TODO put the bins out.")
+        expect(result).to eq "There are currently 2 to do's in your notes"
+    end
+end

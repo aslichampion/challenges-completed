@@ -57,3 +57,96 @@ def todo_checker(string)
     return "There are currently #{words.count("#TODO")} to do's in your notes"
 
 end
+
+class DiaryEntry
+
+    attr_reader :index
+
+    def initialize(title, contents)
+        @title = title
+        @contents = contents
+        @index = 0
+    end
+  
+    def title
+        return @title
+    end
+  
+    def contents
+        return @contents
+    end
+  
+    def count_words
+        words = @contents.split(" ")
+        return words.count
+    end
+  
+    def reading_time(wpm)
+        minutes = (self.count_words / wpm.to_f).ceil
+        if minutes > 1
+            return "This text should take about #{minutes} minutes to read"
+        else
+            return "This text should take about #{minutes} minute to read"
+        end
+    end
+  
+    def reading_chunk(wpm, minutes) 
+        words = @contents.split(" ")
+        word_allocation = wpm * minutes
+        chunk = words[@index, word_allocation].join(' ')
+        if @index + word_allocation < words.count
+            @index += word_allocation
+            return "Your next reading block is: '#{chunk}'"
+        else 
+            @index = 0
+            return "This is your last reading block: '#{chunk}'"
+        end
+    end
+
+  end
+
+  class GrammarStats
+    def initialize
+      @good_sentences = 0
+      @bad_sentences = 0
+    end
+  
+    def check(string)
+        
+        if string[0] == string[0].upcase && string[-1].match?(/[.?!]/)
+            puts "Great! This sentence both starts with a capital letter and ends with the right punctuation."
+            @good_sentences += 1
+            return true
+        elsif string[0] == string[0].upcase
+            puts "Hmm, this sentence does start with a capital, but does not end with appropriate punctuation."
+            @bad_sentences += 1
+            return false
+        elsif string[-1].match?(/[.?!]/)
+            puts "Hmm, this sentence does end with appropriate punctuation, but does not start with a capital."
+            @bad_sentences += 1
+            return false
+        else
+            puts "Hmm, this sentence doesn't seem to start with a capital, or end with appropriate punctuation."
+            @bad_sentences += 1
+            return false
+        end
+
+    end
+
+    def percentage_good
+        total = return_good + return_bad
+        return (return_good / total) * 100
+    end
+    
+    private
+
+    def return_good
+        return @good_sentences.to_f
+    end
+
+    def return_bad
+        return @bad_sentences.to_f
+    end
+  
+
+  end

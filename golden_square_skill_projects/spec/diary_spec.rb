@@ -48,3 +48,24 @@ RSpec.describe "todo_checker method" do
         expect(result).to eq "There are currently 2 to do's in your notes"
     end
 end
+
+RSpec.describe "grammar class" do
+    it "checks to see if sentences begin with a capital and end with punctuation" do
+        checker = GrammarStats.new
+        result = checker.check("This is a sentence that does pass.")
+        expect(result).to eq true
+        result = checker.check("This is a sentence that does pass")
+        expect(result).to eq false
+    end
+
+    it "returns percentage of good sentences overall" do
+        checker = GrammarStats.new
+        checker.check("This is a sentence that does pass.")
+        checker.check("This is a sentence that does pass.")
+        checker.check("This is a sentence that does not pass")
+        checker.check("this is a sentence that does not pass.")
+        result = checker.percentage_good
+        expect(result).to eq 50
+    end
+end
+
